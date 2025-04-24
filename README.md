@@ -168,6 +168,15 @@ npm install @inertiajs/vue3
 
 ```
 
+### Install @@vitejs/plugin-vue
+
+```bash
+
+npm install @vitejs/plugin-vue
+
+
+```
+
 
 ### Initialize the Inertia app
 
