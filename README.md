@@ -146,4 +146,157 @@ export default {
 
 
 
+## For Client-Side
+
+First of all install the vuejs 
+
+```bash
+
+npm install vue@lattest
+
+
+```
+
+### Install dependencies
+
+First, install the Inertia client-side adapter corresponding to your framework of choice.
+
+```bash
+
+npm install @inertiajs/vue3
+
+
+```
+
+
+### Initialize the Inertia app
+
+Next, update your main JavaScript file to boot your Inertia app. To accomplish this, we'll initialize the client-side framework with the base Inertia component.
+
+```bash
+
+import { createApp, h } from 'vue'
+import { createInertiaApp } from '@inertiajs/vue3'
+
+createInertiaApp({
+  resolve: name => {
+    const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
+    return pages[`./Pages/${name}.vue`]
+  },
+  setup({ el, App, props, plugin }) {
+    createApp({ render: () => h(App, props) })
+      .use(plugin)
+      .mount(el)
+  },
+})
+
+
+```
+
+The `setup` callback receives everything necessary to initialize the client-side framework, including the root Inertia `App` component.
+
+
+
+### Setup into the App.js to set up the entry point of the vue app into laravel
+
+You have to set up the entry point into the laravel app. Please `copy` and `past` the code into the `App.js` in under you `resources/js/App.js` file
+
+
+```js
+
+import { createApp, h } from 'vue'
+import { createInertiaApp } from '@inertiajs/vue3'
+
+createInertiaApp({
+  resolve: name => {
+    const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
+    return pages[`./Pages/${name}.vue`]
+  },
+  setup({ el, App, props, plugin }) {
+    createApp({ render: () => h(App, props) })
+      .use(plugin)
+      .mount(el)
+  },
+})
+
+
+
+```
+
+
+
+## Production setup (For shared hosting)
+
+When you are on shared hosting you have to set up the software so that it can work on the hosting efficiently. 
+
+
+### Setup the `app.blade.php` for the production
+
+For production update the `app.blade.php` code :-
+
+```blade
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <title>{{ config('app.name') }}</title>
+
+    
+    <!-- Change these scripts and css paths with the actual build in css and js files -->
+    <link rel="stylesheet" href="{{ asset('build/assets/app-BtW0pRbl.css') }}">
+    <script  src="{{ asset('build/assets/app-BOO1F6JN.js') }}" defer></script>
+    
+    <!-- Manually include dynamic head -->
+    <script>
+        document.title = 'Inertia Example'; // You can change this dynamically
+    </script>
+  </head>
+  <body>
+    <div id="app" data-page="{{ json_encode($page) }}"></div>
+
+    <!-- Mounting Inertia -->
+    <script>
+        import { createApp, h } from 'vue';
+        import { createInertiaApp } from '@inertiajs/vue3';
+
+        createInertiaApp({
+            resolve: name => import(`./Pages/${name}.vue`),
+            setup({ el, App, props }) {
+                createApp({ render: () => h(App, props) })
+                    .mount(el);
+            },
+        });
+    </script>
+  </body>
+</html>
+
+
+
+
+```
+
+
+### Build the frontend with the npm before uploading into the production server
+
+You have to build the frontend with this command to genereate the production ready compressed assets and css, js and manifest.json files
+
+```bash
+
+npm run build
+
+
+```
+
+After this you have to upload the files on the production server
+
+And that's how you can create and develop a laravel + vue + inertia project
+
+
+
+
+
+
+
 
