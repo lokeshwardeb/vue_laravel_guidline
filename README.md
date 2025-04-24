@@ -152,7 +152,7 @@ First of all install the vuejs
 
 ```bash
 
-npm install vue@lattest
+npm install vue
 
 
 ```
