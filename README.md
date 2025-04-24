@@ -321,6 +321,20 @@ class UserController extends Controller
 
 ```
 
+### Web.php (Router)
+
+```php
+
+Route::get('/test', function(){
+    return  Inertia::render('Test', [
+        'user' => 'protik'
+      ]);
+});
+
+
+
+```
+
 
 ### Build the frontend with the npm before uploading into the production server
 
