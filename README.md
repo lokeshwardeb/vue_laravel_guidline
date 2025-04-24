@@ -277,6 +277,50 @@ For production update the `app.blade.php` code :-
 
 ```
 
+## Basic starter code 
+
+### Frontend
+
+```vue
+<script setup>
+import Layout from './Layout'
+import { Head } from '@inertiajs/vue3'
+
+defineProps({ user: Object })
+</script>
+
+<template>
+  <Layout>
+    <Head title="Welcome" />
+    <h1>Welcome</h1>
+    <p>Hello {{ user.name }}, welcome to your first Inertia app!</p>
+  </Layout>
+</template>
+
+
+```
+
+
+
+### Backend (Laravel)
+
+```php
+
+use Inertia\Inertia;
+
+class UserController extends Controller
+{
+    public function show(User $user)
+    {
+        return Inertia::render('User/Show', [
+          'user' => $user
+        ]);
+    }
+}
+
+
+```
+
 
 ### Build the frontend with the npm before uploading into the production server
 
